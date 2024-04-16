@@ -1,4 +1,4 @@
-This project is built upon DROID-SLAM. To run the code, please follow the DROID-SLAM instructions, including dataset downloading, demo, and training. Our project does not require extra dependency.
+This project is built upon DROID-SLAM. To run the code, please follow the [DROID-SLAM instructions](https://github.com/princeton-vl/DROID-SLAM), including dataset downloading, demo, and training. Our project does not require extra dependency.
 
 We propose to use some feature-level fusion methods to enhance the feature extraction procedure. In this project, we implement feature concatenation, self-attention fuser, and deformable-attention fuser.
 
