@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from collections import OrderedDict
 
-from modules.extractor import BasicEncoder
+from modules.extractor import BasicEncoder, DualEncoder
 from modules.corr import CorrBlock
 from modules.gru import ConvGRU
 from modules.clipping import GradientClip
@@ -144,8 +144,12 @@ class UpdateModule(nn.Module):
 
 
 class DroidNet(nn.Module):
-    def __init__(self):
+    def __init__(self, args=None):
         super(DroidNet, self).__init__()
+        if self.args:
+            # import pdb; pdb.set_trace()
+            self.fnet = DualEncoder(output_dim=128, norm_fn='instance', args=args)
+            self.cnet = DualEncoder(output_dim=256, norm_fn='none', args=args)
         self.fnet = BasicEncoder(output_dim=128, norm_fn='instance')
         self.cnet = BasicEncoder(output_dim=256, norm_fn='none')
         self.update = UpdateModule()

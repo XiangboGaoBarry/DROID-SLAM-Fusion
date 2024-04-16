@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-
+from modules.fusion import SelfAttFuser, DeformAttFuser
 class ResidualBlock(nn.Module):
     def __init__(self, in_planes, planes, norm_fn='group', stride=1):
         super(ResidualBlock, self).__init__()
@@ -116,7 +116,7 @@ class BottleneckBlock(nn.Module):
 DIM=32
 
 class BasicEncoder(nn.Module):
-    def __init__(self, output_dim=128, norm_fn='batch', dropout=0.0, multidim=False):
+    def __init__(self, output_dim=128, norm_fn='batch', dropout=0.0, multidim=False, args=None):
         super(BasicEncoder, self).__init__()
         self.norm_fn = norm_fn
         self.multidim = multidim
@@ -196,3 +196,4 @@ class BasicEncoder(nn.Module):
 
         _, c2, h2, w2 = x.shape
         return x.view(b, n, c2, h2, w2)
+
