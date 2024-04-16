@@ -48,7 +48,8 @@ def train(gpu, args):
     rng = np.random.default_rng(12345)
 
     N = args.n_frames
-    model = DroidNet()
+    # import pdb; pdb.set_trace()
+    model = DroidNet(args)
     model.cuda()
     model.train()
 
@@ -168,6 +169,8 @@ if __name__ == '__main__':
     parser.add_argument('--scale', action='store_true')
     parser.add_argument('--edges', type=int, default=24)
     parser.add_argument('--restart_prob', type=float, default=0.2)
+    parser.add_argument('--dual_backbone', action='store_true', help='use dual backbone and feature-level fusion')
+    parser.add_argument('--fusion_method', choices=['concat', 'self_att', 'deform_att'], default='concat', help='feature fusion method')
 
     args = parser.parse_args()
 
