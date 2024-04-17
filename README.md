@@ -1,5 +1,15 @@
 This project is built upon DROID-SLAM. To run the code, please follow the [DROID-SLAM instructions](https://github.com/princeton-vl/DROID-SLAM), including dataset downloading, demo, and training. Our project does not require extra dependency.
 
+If you would like to calculate the GFLOPs
+```
+pip install ptflops
+cd droid_slam
+python flop_cal.py --fusion_method [Optional] --net [Optional] --stereo
+```
+Run `python flop_cal.py --help` for more information
+
+## Efficiency Comparsion
+
 We propose to use some feature-level fusion methods to enhance the feature extraction procedure. In this project, we implement feature concatenation, self-attention fuser, and deformable-attention fuser.
 
 To train with our feature-level fusion modules, run
@@ -31,4 +41,5 @@ We trained the without feature-level fusion(DROID-SLAM) and with our feature-lev
 | Feat Concat(ours)     | 0.187| 0.142| 0.131| 0.067| **0.031**| 4.611| 0.619| 0.169| 0.745|
 | Self-Att Fuser(ours)  | 0.169| 0.125| 0.136| 0.062| **0.031**| 4.086| 0.605| 0.147| 0.670|
 | Deform-Att Fuser(ours)| **0.164**| **0.122**| 0.137| 0.063| 0.031| 4.104| **0.603**| **0.140**| **0.671**|
+
 

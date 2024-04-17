@@ -45,8 +45,8 @@ class DeformableSpatialAttentionLayer(nn.Module):
         self.dropout = nn.Dropout(dropout)
         self.sampling_offsets = nn.Linear(self.embed_dims, num_heads * num_points * 2)
         self.attention_weights = nn.Linear(self.embed_dims, num_heads * num_points)
-        self.value_proj = nn.Linear(self.embed_dims, dim_per_head)
-        self.output_proj = nn.Linear(dim_per_head, self.embed_dims)
+        self.value_proj = nn.Linear(self.embed_dims, self.embed_dims)
+        self.output_proj = nn.Linear(self.embed_dims, self.embed_dims)
         self.init_weights()
     
     def init_weights(self):
@@ -95,9 +95,7 @@ class DeformableSpatialAttentionLayer(nn.Module):
              Tensor: forwarded results with shape [bs, num_query, embed_dims].
         """
         
-        # import pdb; pdb.set_trace()
-        
-        bs, num_query, embed_dims = query.shape
+        bs, num_query, _ = query.shape
         h, w = spatial_shapes
         
         if identity is None:
@@ -122,7 +120,7 @@ class DeformableSpatialAttentionLayer(nn.Module):
         output = self.output_proj(deformable_attn_pytorch(value, (h, w), sampling_locations, attention_weights))
         
         # return self.dropout(output) + identity
-        return self.dropout(output) + identity, sampling_offsets, attention_weights
+        return self.dropout(output) + identity
         
     
     def get_reference_points(self, H, W, bs=1, device='cuda', dtype=torch.half):
